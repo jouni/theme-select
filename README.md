@@ -1,69 +1,109 @@
-# Add-on template for Vaadin with an embedded Lit component 
+# Theme Select components for Vaadin
 
-![clock-element](https://user-images.githubusercontent.com/991105/184157011-9cdd51bb-2a57-4698-9fbb-e539d382e99f.png)
+These components allow the user of your application to choose the color mode, a.k.a. theme, of the application.
 
-You should start from this project, if your add-on will be based on custom Lit HTML element (that you are not planning to publish through npm) and provide Java API for the rest of the application.
-As an example this project implements a simple clock-element to display current time based on browser. 
+The options are hardcoded to “System”, “Light”, and “Dark”.
 
-## Add-on architecture
-![client-server-addon](https://user-images.githubusercontent.com/991105/211867227-2c71ee29-9ea6-4de0-a5e4-2bf53781628d.svg)
+If you use multiple theme select components in the same app, they all stay in sync without extra effort from your part. Just add the components in any view/layout in your app, and they’ll work as expected.
 
-### Alternative add-on templates
-
-If you wish to build and publish an add-on or extension in [Vaadin Directory](https://vaadin.com/directory), Vaadin provides the following three template projects:
- 1. [vaadin/addon-template](https://github.com/vaadin/addon-template): Create a composite component. This Java-only template is the easiest when extending Vaadin Java components.
- 2. **(this repo)** [vaadin/client-server-addon-template](https://github.com/vaadin/client-server-addon-template): Build a standalone, client-server TypeScript-Java component. This template provides you with a [Lit-based](https://github.com/lit/lit/) example to start with.
- 3. [vaadin/npm-addon-template](https://github.com/vaadin/npm-addon-template): Wrap a web component from [npmjs.com](https://npmjs.com/) as a Vaadin Java component.
+The user’s preferred theme is stored in the browser’s `localStorage`.
 
 
-## Development instructions
+## Components
 
-### Important Files 
+You can choose from the following components, how you want to offer this choice to the users of your application.
 
-Component implementation and API:
-* Clock.java: Add-on component Java class. Provides server-side Java API to use component in your applications.
-* clock-element.ts: TypeScript file that defines the client-side part of the component.
-* clock-element.css: Default styles for the component.
 
-For testing and development:
-* TestView.java: A View class that let's you test the component you are building. This and other classes in the test folder will not be packaged during the build. You can add more test view classes in this package.
-* TestViewIT.java: Integration tests for the component. Uses TestView.java.
-* assembly/: this folder includes configuration for packaging the project into a JAR so that it works well with other Vaadin projects and the Vaadin Directory. There is usually no need to modify these files, unless you need to add JAR manifest entries.
+### ThemeSelect
 
-### Deployment
+The `ThemeSelect` component renders as a popover menu:
 
-- Starting the test/demo server in dev-mode:
-```
-mvn jetty:run
-```
-- Starting the test/demo server in prod-mode:
-```
-mvn jetty:run -Pproduction
-```
+<img alt="Screenshot of the theme select component" src="theme-select-collapsed.png" width="150">
 
-These deploy test view at http://localhost:8080
+<img alt="Screenshot of the theme select component, opened" src="theme-select.png" width="200">
 
-### Integration test
+#### Minimal Variant
 
-To run Integration Tests, execute `mvn verify -Pit,production`.
+<img alt="Screenshot of the minimal variant of theme select component" src="theme-select-minimal.png" width="50">
 
-## Publishing to Vaadin Directory
+Add the `.minimal` class to the `ThemeSelect` component to hide the labels. The labels are still visible in the popover, just like in the default variant. The `aria-label` attribute is set when you define a label for the component.
 
-You should change the `organisation.name` property in `pom.xml` to your own name/organization.
+When the “System” theme is used, the minimal variant shows the effective theme in the collapsed state.
 
-```
-    <organization>
-        <name>###author###</name>
-    </organization>
-```
 
-You can create the zip package needed for [Vaadin Directory](https://vaadin.com/directory/) using
+### ThemeRadioGroup
+
+The `ThemeRadioGroup` component renders as a group of radio buttons:
+
+<img alt="Screenshot of the theme radio group component" src="theme-radio-group.png" width=350>
+
+
+## Usage
+
+After adding the add-on dependency to your project’s pom.xml, using the components is straightforward.
+
+In Vaadin Flow:
+```java
+public class MyView extends Div {
+  public MyView() {
+    add(new ThemeSelect("Theme"));
+
+    ThemeSelect minimalSelect = new ThemeSelect("Choose theme");
+    minimalSelect.addClassNames("minimal");
+    add(minimalSelect);
+
+    add(new ThemeRadioGroup("Color Mode"));
+  }
+}
 
 ```
-mvn versions:set -DnewVersion=1.0.0 # You cannot publish snapshot versions 
-mvn package -Pdirectory,production
+
+In Vaadin Hilla:
+```jsx
+export default function MyView() {
+  return <div>
+    <ThemeSelect label="Theme" />
+
+    <ThemeSelect className="minimal" label="Choose theme" />;
+
+    <ThemeRadioGroup label="Color Mode" />
+  </div>;
+}
 ```
 
-The package is created as `target/{project-name}-1.0.0.zip`
 
-For more information or to upload the package, visit https://vaadin.com/directory/my-components?uploadNewComponent
+### Customization
+
+You can customize the style of the component the same you can style official Vaadin components, [using the Lumo CSS custom properties](https://vaadin.com/docs/latest/styling/styling-components#styling-components-with-style-properties).
+
+For example:
+
+```css
+html {
+  --lumo-border-radius: 10px;
+  --vaadin-input-field-border-width: 1px;
+  --vaadin-input-field-border-color: var(--lumo-contrast-30pct);
+  --vaadin-input-field-background: var(--lumo-tint-5pct);
+}
+```
+
+<img alt="Screenshot of the theme select components with customized Lumo theme" src="lumo-customization.png" width="350">
+
+
+### Localization
+
+To change the labels of the theme options (i.e., “System”, “Light”, and “Dark”), define the following CSS custom properties in your main stylesheet, for example:
+
+styles.css:
+```css
+html {
+  --theme-label-system: "OS";
+  --theme-label-light: "Day";
+  --theme-label-dark: "Night";
+}
+```
+
+
+## Problems?
+
+Submit an issue in [the GitHub repo](https://github.com/jouni/theme-select).
