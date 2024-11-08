@@ -80,7 +80,7 @@ For example:
 
 ```css
 html {
-  --lumo-border-radius: 10px;
+  --lumo-border-radius-m: 10px;
   --vaadin-input-field-border-width: 1px;
   --vaadin-input-field-border-color: var(--lumo-contrast-30pct);
   --vaadin-input-field-background: var(--lumo-tint-5pct);
