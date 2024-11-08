@@ -42,3 +42,4 @@ vite.generated.ts
 vite.config.ts
 /.vscode
 package-lock.json
+.DS_Store
