@@ -1,5 +1,7 @@
 # Theme Select components for Vaadin
 
+[**Install from Vaadin Directory**](https://vaadin.com/directory/component/theme-select)
+
 These components allow the user of your application to choose the color mode, a.k.a. theme, of the application.
 
 The options are hardcoded to “System”, “Light”, and “Dark”.
