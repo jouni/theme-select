@@ -6,7 +6,7 @@
 
     <groupId>org.vaadin.addons.themeselect</groupId>
     <artifactId>themeselect</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>Theme Select</name>
     <description>Theme select components for Vaadin</description>
 
