@@ -36,12 +36,18 @@ public class ApplicationServiceInitListener
 
                             window._themeSelect.updateThemeAttribute = () => {
                                 const theme = window._themeSelect.getPreferredTheme();
+                                const root = document.documentElement;
 
                                 if (theme) {
-                                    document.documentElement.setAttribute('theme', theme);
+                                    root.setAttribute('theme', theme);
                                 } else {
-                                    document.documentElement.removeAttribute('theme');
+                                    root.removeAttribute('theme');
                                 }
+
+                                // Vaadin 25 themes (Aura, Lumo) follow the CSS color-scheme property.
+                                // "light dark" lets the operating system decide.
+                                const stored = localStorage.getItem('theme');
+                                root.style.colorScheme = stored ? stored : 'light dark';
                             }
 
                             window._themeSelect.prefersDark.onchange = window._themeSelect.updateThemeAttribute;

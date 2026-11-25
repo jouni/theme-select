@@ -10,6 +10,11 @@ If you use multiple theme select components in the same app, they all stay in sy
 
 The user’s preferred theme is stored in the browser’s `localStorage`.
 
+Works with Vaadin 24 and Vaadin 25, with both the Lumo and the Aura theme. The selected
+mode is applied to the `<html>` element as the `color-scheme` CSS property, which the
+Vaadin 25 themes follow, and as the `theme` attribute (`light` or `dark`), which Lumo in
+Vaadin 24 uses.
+
 
 ## Components
 
