@@ -1,4 +1,4 @@
-import '@vaadin/select/vaadin-lit-select';
+import '@vaadin/select/vaadin-select.js';
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -71,8 +71,9 @@ export const sharedStyles = css`
 
   .theme-select [class^=theme-icon] {
     display: inline-block;
-    width: var(--lumo-icon-size-s, 16px);
-    height: var(--lumo-icon-size-s, 16px);
+    width: var(--lumo-icon-size-s, 1em);
+    height: var(--lumo-icon-size-s, 1em);
+    flex: none;
     background: currentColor;
   }
 
@@ -131,7 +132,7 @@ styles.textContent = css`
   }
 
   vaadin-select-overlay.theme-select vaadin-select-item {
-    padding: 0 var(--lumo-space-s, 8px);
+    padding: 0 var(--lumo-space-s, var(--vaadin-padding-s, 8px));
   }
 
   vaadin-select-overlay.theme-select vaadin-select-item::part(checkmark) {
@@ -141,12 +142,12 @@ styles.textContent = css`
   .theme-select vaadin-select-item::part(content) {
     display: flex;
     align-items: center;
-    gap: var(--lumo-space-s, 8px);
+    gap: var(--lumo-space-s, var(--vaadin-gap-s, 8px));
   }
 
   @media (any-hover: hover) {
     theme-select.minimal vaadin-select::part(input-field):hover {
-      background-color: var(--lumo-contrast-5pct, #efefef);
+      background-color: var(--lumo-contrast-5pct, var(--vaadin-background-container, #efefef));
     }
   }
 

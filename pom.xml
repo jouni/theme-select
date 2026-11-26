@@ -189,6 +189,24 @@
 
     <profiles>
 
+        <!-- Build and run against Vaadin 25 (requires Java 21) -->
+        <profile>
+            <id>v25</id>
+            <properties>
+                <vaadin.version>25.3.5</vaadin.version>
+                <maven.compiler.source>21</maven.compiler.source>
+                <maven.compiler.target>21</maven.compiler.target>
+            </properties>
+            <dependencies>
+                <!-- Dev mode tooling is no longer included in vaadin-core in Vaadin 25 -->
+                <dependency>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-dev</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
         <!-- Build profile for Vaadin Directory compatible package -->
         <profile>
             <id>directory</id>
